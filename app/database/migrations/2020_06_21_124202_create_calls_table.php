@@ -15,6 +15,11 @@ class CreateCallsTable extends Migration
     {
         Schema::create('calls', function (Blueprint $table) {
             $table->id();
+
+            $table->boolean('is_instant')->default(false);
+            $table->bigInteger('employee_id')->nullable()->index();
+            $table->boolean('is_closed')->default(false);
+
             $table->timestamps();
         });
     }
