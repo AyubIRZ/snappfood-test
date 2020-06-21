@@ -10,6 +10,7 @@ class Employee extends Model
       'name',
       'priority',
       'is_ready',
+      'is_busy',
     ];
 
     /**
