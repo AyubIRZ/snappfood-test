@@ -15,6 +15,11 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+
+            $table->string('name');
+            $table->enum('priority', [1, 2, 3]);
+            $table->boolean('is_ready')->default(false);
+
             $table->timestamps();
         });
     }
