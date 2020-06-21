@@ -51,6 +51,17 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
     }
 
     /**
+     * Creates a new object from the given attributes and saves it to the database.
+     *
+     * @param array $attributes
+     * @return \Illuminate\Database\Eloquent\Model|mixed
+     */
+    public function update(array $attributes)
+    {
+        return parent::update($attributes);
+    }
+
+    /**
      * @return |null
      */
     public function findForInstantCall()

@@ -28,4 +28,9 @@ interface CallRepositoryInterface
      * @return mixed
      */
     public function create(array $attributes);
+
+    /**
+     * @return mixed
+     */
+    public function findInstantCall();
 }

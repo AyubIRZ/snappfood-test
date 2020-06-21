@@ -6,6 +6,7 @@ namespace App\Repositories\Eloquent;
 use App\Call;
 use App\Repositories\CallRepositoryInterface;
 use App\Repositories\EmployeeRepositoryInterface;
+use phpDocumentor\Reflection\Types\Integer;
 
 class CallRepository extends BaseRepository implements CallRepositoryInterface
 {
@@ -44,7 +45,7 @@ class CallRepository extends BaseRepository implements CallRepositoryInterface
      */
     public function create(array $attributes)
     {
-        $isInstant = ($attributes['is_instant'] == 1)? true : false;
+        $isInstant = ($attributes['is_instant'] == 1) ? true : false;
 
         if ($isInstant) {
             $employee = $this->employee->findForInstantCall();
@@ -56,6 +57,42 @@ class CallRepository extends BaseRepository implements CallRepositoryInterface
             'is_instant' => $isInstant,
             'employee_id' => $employee,
         ]);
+
+        return $call;
+    }
+
+
+    /**
+     * @param $callId
+     * @return bool
+     */
+    public function close($callId)
+    {
+        $call = $this->find($callId)[0];
+
+        if ($call->is_closed) {
+            return false;
+        }
+
+        $call->is_closed = true;
+        $call->save();
+
+        return $call->employee_id;
+    }
+
+    /**
+     * @return bool|mixed
+     */
+    public function findInstantCall()
+    {
+        $call = $this->model->where('employee_id', null)
+            ->where('is_instant', true)
+            ->where('is_closed', false)
+            ->first() ?? false;
+
+        if (!$call) {
+            return false;
+        }
 
         return $call;
     }
