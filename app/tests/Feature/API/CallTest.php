@@ -31,10 +31,6 @@ class CallTest extends TestCase
         $response->assertStatus(201)
             ->assertJson([
                 'ok' => true,
-                'message' => 'A new call has been made and added to the call center queue!',
-                'data' => [
-                    'employee_id' => null
-                ]
             ]);
     }
 
@@ -53,10 +49,28 @@ class CallTest extends TestCase
         $response->assertStatus(201)
             ->assertJson([
                 'ok' => true,
-                'message' => 'A new call has been made and added to the call center queue!',
-                'data' => [
-                    'employee_id' => null
-                ]
             ]);
+    }
+
+    /**
+     * Test that closing a call returns correct response.
+     *
+     * @return void
+     */
+    public function testClosingCallReturnsCorrectResponse()
+    {
+        $call = $this->json('Post','/api/calls/',
+            [
+                'is_instant' => true,
+            ])->content();
+
+        $response = $this->json('put','/api/calls/close/',
+            [
+                'call' => json_decode($call)->data->id,
+            ]);
+
+        $response->assertStatus(201)->assertJson([
+            'ok' => true,
+        ]);
     }
 }
