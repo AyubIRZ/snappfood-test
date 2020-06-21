@@ -19,6 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->string('name');
             $table->enum('priority', [1, 2, 3]);
             $table->boolean('is_ready')->default(false);
+            $table->boolean('is_busy')->default(false);
 
             $table->timestamps();
         });
