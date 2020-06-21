@@ -36,4 +36,14 @@ interface EmployeeRepositoryInterface
      * @return mixed
      */
     public function createMany(array $collection);
+
+    /**
+     * @return mixed
+     */
+    public function findForInstantCall();
+
+    /**
+     * @return mixed
+     */
+    public function findForNonInstantCall();
 }

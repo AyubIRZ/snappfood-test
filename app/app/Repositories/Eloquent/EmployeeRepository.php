@@ -49,4 +49,45 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
     {
         return parent::create($attributes);
     }
+
+    /**
+     * @return |null
+     */
+    public function findForInstantCall()
+    {
+        $employee = $this->model
+                ->where('is_busy', false)
+                ->orderBy('priority')
+                ->first() ?? false;
+
+        if (!$employee) {
+            return null;
+        }
+
+        $employee->is_busy = true;
+        $employee->save();
+
+        return $employee->id;
+    }
+
+    /**
+     * @return |null
+     */
+    public function findForNonInstantCall()
+    {
+        $employee = $this->model
+                ->where('is_busy', false)
+                ->where('is_ready', true)
+                ->orderBy('priority')
+                ->first() ?? false;
+
+        if (!$employee) {
+            return null;
+        }
+
+        $employee->is_busy = true;
+        $employee->save();
+
+        return $employee->id;
+    }
 }
