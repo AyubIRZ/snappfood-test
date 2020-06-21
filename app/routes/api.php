@@ -21,4 +21,5 @@ Route::group([
     'namespace' => 'API',
 ], function () {
     Route::post('/', 'CallController@make');
+    Route::put('/close', 'CallController@close');
 });
