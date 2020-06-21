@@ -15,3 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/employees/{employee}', 'API\EmployeeController@show');
+
+Route::group([
+    'prefix' => 'calls',
+    'namespace' => 'API',
+], function () {
+    Route::post('/', 'CallController@make');
+});
